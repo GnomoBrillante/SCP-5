@@ -60,3 +60,15 @@ def menu():#funcion que muestra el menu de todas las opciones
             
             
     return opcion,opcion_tiempo
+"""
+Funciones que manipulan los data Frame
+"""
+def extraer_datos():# se extraen los datos
+    df=pd.read_csv("TasaDeIncidencia.csv",index_col="Region")
+    return df
+
+def mostrar_regionANDcomuna(df,numRegion):
+    print("\n")
+    print("REGION: ",numRegion)
+    print(df[(df["Codigo region"]==numRegion)]["Comuna"])
+    print("\n")
