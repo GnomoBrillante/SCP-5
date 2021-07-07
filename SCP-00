@@ -1,0 +1,62 @@
+import os
+import pandas as pd
+import matplotlib as plt
+import numpy as np
+from matplotlib.ticker import MaxNLocator
+"""
+Funciones que piden los datos
+"""
+
+def escoger_region():#opción para escoger la región
+    while(1):
+        print("Por favor, escoja una de las 16 regiones  [1...16]\n")
+        opcion=int(input("Por favor, seleccione una opción "))
+        os.system ("cls")
+        if((opcion>=1)and (opcion<=16)):
+            break
+        print("inserte un valor válido \n")
+    return opcion
+
+def escoger_comuna():
+    while(1):
+        print("Inserte el nombre de la comuna \n")
+        opcion=input("Comuna: ")
+        os.system ("cls")
+        if(not opcion.isdigit()):# no es digito
+            break
+        print("inserte un valor válido \n")
+    return opcion
+    
+
+def sub_menu():#opción para ver todo los datos
+    while(1):
+        print("( 1 ) ultimos 7 dias \n( 2 ) historico\n")
+        opcion=int(input("seleccione una opción:  "))
+        os.system ("cls")
+        if((opcion>=1)and (opcion<=2)):
+            break
+        print("incerte un valor valido \n")
+    return opcion
+
+def menu():#funcion que muestra el menu de todas las opciones
+    opcion_tiempo=0
+    while(1):
+        print("\n")
+        print("( 1 ) Tasa de incidencia Comuna ")
+        print("( 2 ) Tasa de incidencia Region  ")
+        print("( 3 ) Top Region max vs min")
+        print("( 4 ) Top Compuna max vs min")
+        print("( 0 ) salir")
+        opcion=int(input("seleccione una opcion: "))
+        os.system ("cls")
+        
+        
+        if((opcion>=1)and (opcion<=2)):
+            opcion_tiempo=sub_menu()#opcion para las opciones donde se puede pedir mas de un tipo de info
+        if((opcion>=0)and (opcion<=4)):
+            break
+        print("incerte un valor valido \n")    
+            
+            
+            
+    return opcion,opcion_tiempo
