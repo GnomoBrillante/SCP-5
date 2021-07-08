@@ -72,3 +72,33 @@ def mostrar_regionANDcomuna(df,numRegion):
     print("REGION: ",numRegion)
     print(df[(df["Codigo region"]==numRegion)]["Comuna"])
     print("\n")
+
+
+def TDI_comuna(opcion2):
+    df=extraer_datos()
+    numRegion=escoger_region()
+    mostrar_regionANDcomuna(df, numRegion)
+    comuna=escoger_comuna()
+    df2=df[(df["Comuna"]==comuna()
+    
+    if(opcion2==1):
+         df2=df2.iloc[:,127:134]
+         df2=df2.iloc[0,:]
+         
+         a=df2.plot(kind="bar",xlabel="Comuna:"+comuna,ylabel="Casos")
+         a.set_title("Casos ultimos 7 dias")
+         plt.rc("xtick", labelsize=10)
+         
+
+
+
+
+
+
+
+
+
+
+
+
+
