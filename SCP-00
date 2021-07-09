@@ -88,7 +88,40 @@ def TDI_comuna(opcion2):
          a=df2.plot(kind="bar",xlabel="Comuna:"+comuna,ylabel="Casos")
          a.set_title("Casos ultimos 7 dias")
          plt.rc("xtick", labelsize=10)
-         
+            
+    if(opcion2==2):#informacion  historico
+        df2=df2.iloc[:,4:134]
+        df2=df2.iloc[0,:]#obtenemos solo la informacion de la insidencia de los casos
+        
+        a=df2.plot(kind="bar",xlabel="Comuna:"+comuna,ylabel="Casos")
+        a.set_title("Casos historicos")
+        plt.rc('xtick', labelsize=10) 
+        a.xaxis.set_major_locator(MaxNLocator(5))
+    pass
+
+def TDI_region(opcion2):
+    df=extraer_datos()#extraemos datos
+    numRegion=escoger_region()#escogemos region
+    mostrar_regionANDcomuna(df, numRegion)#mostramos la region y comuna
+    df2=df.groupby("Codigo region").sum()#agrupamos en regioness
+    df2=df2.iloc[:,2:134]
+    numRegion=numRegion-1
+    df2=df2.iloc[numRegion,:]
+    
+    if(opcion2==1):#informacion ultimos 7 dias
+        
+        df2=df2.iloc[123:130]     
+        a=df2.plot(kind="bar",xlabel="Region:"+str(numRegion+1),ylabel="Casos")
+        a.set_title("Casos ultimos 7 dias")
+        plt.rc('xtick', labelsize=10) 
+        
+    if(opcion2==2):#informacion  historico
+        
+        a=df2.plot(kind="bar",xlabel="Region:"+str(numRegion+1),ylabel="Casos")
+        a.set_title("Casos historicos")
+        plt.rc('xtick', labelsize=10) 
+        a.xaxis.set_major_locator(MaxNLocator(5))
+        
 
 
 
