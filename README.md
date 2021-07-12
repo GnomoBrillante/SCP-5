@@ -11,6 +11,6 @@ El programa despliega un menú que permite:
   4)Mostrar métricas de comparación.
   
 El presente trabajo necesita de los siguientes elementos para poder funcionar:
-Pandas, Matplotlib, Numpy, un IDE (Spyder de preferencia) y Anacondas.
+Pandas, Matplotlib, Numpy, un IDE (Spyder de preferencia), Anacondas y el archivo .csv "TasaDeIncidencia" ubicado en la misma carpeta del archivo python
 
 Los autores del proyecto en cuestión (Número 5) son Lorenzo Figueroa Wlack y Rodrigo Sances, estudiantes de primer año de la carrera Ingeniería Civíl Informática de la Universidad de Valparaíso.
