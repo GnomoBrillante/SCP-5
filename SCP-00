@@ -7,31 +7,31 @@ from matplotlib.ticker import MaxNLocator
 Funciones que piden los datos
 """
 
-def escoger_region():#opción para escoger la región
+def escoger_region():#opcion para escoger Region
     while(1):
-        print("Por favor, escoja una de las 16 regiones  [1...16]\n")
-        opcion=int(input("Por favor, seleccione una opción "))
+        print("Escoja una de las 16 Regiones  [1...16]\n")
+        opcion=int(input("seleccione una opcion "))
         os.system ("cls")
         if((opcion>=1)and (opcion<=16)):
             break
-        print("inserte un valor válido \n")
+        print("incerte un valor valido \n")
     return opcion
 
 def escoger_comuna():
     while(1):
-        print("Inserte el nombre de la comuna \n")
+        print("Incerte el nombre de la comuna \n")
         opcion=input("Comuna: ")
         os.system ("cls")
         if(not opcion.isdigit()):# no es digito
             break
-        print("inserte un valor válido \n")
+        print("incerte un valor valido \n")
     return opcion
     
 
-def sub_menu():#opción para ver todo los datos
+def sub_menu():#opcion para historico o todo los datos
     while(1):
         print("( 1 ) ultimos 7 dias \n( 2 ) historico\n")
-        opcion=int(input("seleccione una opción:  "))
+        opcion=int(input("seleccione una opcion:  "))
         os.system ("cls")
         if((opcion>=1)and (opcion<=2)):
             break
@@ -72,23 +72,24 @@ def mostrar_regionANDcomuna(df,numRegion):
     print("REGION: ",numRegion)
     print(df[(df["Codigo region"]==numRegion)]["Comuna"])
     print("\n")
-
+    
 
 def TDI_comuna(opcion2):
-    df=extraer_datos()
-    numRegion=escoger_region()
-    mostrar_regionANDcomuna(df, numRegion)
-    comuna=escoger_comuna()
-    df2=df[(df["Comuna"]==comuna()
+    df=extraer_datos()#extraemos datos
+    numRegion=escoger_region()#escogemos region
+    mostrar_regionANDcomuna(df, numRegion)#mostramos la region y comuna
+    comuna=escoger_comuna()# escogemos la comuna
+    df2=df[(df["Comuna"]==comuna)]#obtenemos la comuna en especifico
     
-    if(opcion2==1):
-         df2=df2.iloc[:,127:134]
-         df2=df2.iloc[0,:]
-         
-         a=df2.plot(kind="bar",xlabel="Comuna:"+comuna,ylabel="Casos")
-         a.set_title("Casos ultimos 7 dias")
-         plt.rc("xtick", labelsize=10)
-            
+    if(opcion2==1):#informacion ultimos 7 dias
+        df2=df2.iloc[:,127:134]
+        df2=df2.iloc[0,:]#obtenemos solo la informacion de la insidencia de los casos
+        
+        a=df2.plot(kind="bar",xlabel="Comuna:"+comuna,ylabel="Casos")
+        a.set_title("Casos ultimos 7 dias")
+        plt.rc('xtick', labelsize=10) 
+        plt.pyplot.show()
+        
     if(opcion2==2):#informacion  historico
         df2=df2.iloc[:,4:134]
         df2=df2.iloc[0,:]#obtenemos solo la informacion de la insidencia de los casos
@@ -97,6 +98,7 @@ def TDI_comuna(opcion2):
         a.set_title("Casos historicos")
         plt.rc('xtick', labelsize=10) 
         a.xaxis.set_major_locator(MaxNLocator(5))
+        plt.pyplot.show()
     pass
 
 def TDI_region(opcion2):
@@ -113,7 +115,8 @@ def TDI_region(opcion2):
         df2=df2.iloc[123:130]     
         a=df2.plot(kind="bar",xlabel="Region:"+str(numRegion+1),ylabel="Casos")
         a.set_title("Casos ultimos 7 dias")
-        plt.rc('xtick', labelsize=10) 
+        plt.rc('xtick', labelsize=10)
+        plt.pyplot.show()
         
     if(opcion2==2):#informacion  historico
         
@@ -121,18 +124,19 @@ def TDI_region(opcion2):
         a.set_title("Casos historicos")
         plt.rc('xtick', labelsize=10) 
         a.xaxis.set_major_locator(MaxNLocator(5))
+        plt.pyplot.show()
         
-def max_min_region():#extraemos datos
-    df=extraer_datos()
-    df2=df.groupby("codigo region").sum()
+def max_min_region():
+    df=extraer_datos()#extraemos datos
+    df2=df.groupby("Codigo region").sum()
     #print(df2)
     df2=df2.iloc[:,2:132]
     
-    df2["sum"] = df2.iloc[:,2:132].sum(axis=1)
+    df2['sum'] = df2.iloc[:,2:132].sum(axis=1)
     #print(df2)
     
-    max=df2["sum"].max()
-    min=df2["sum"].min()
+    max=df2['sum'].max()
+    min=df2['sum'].min()
     
     dat1=df2[df2["sum"]>=max]
     dat1=dat1.iloc[0,0:130]
@@ -142,85 +146,65 @@ def max_min_region():#extraemos datos
     dat2=dat2.iloc[0,0:130]
     
     fig, (ax1, ax2) = plt.pyplot.subplots(2)
-    fig.suptitle("Region con maxima incidencia y Region con minima incidencia")
-    ax1.plot(dat1.index.values, dat1.to_numpy())
-    ax1.xaxis.set_major_locator(MaxNLocator(5))
-    
-    
-    
-    
-    
-    
-    
-def max_min_comuna()
-    df=extraer_datos()#extraemos datos
-    
-    df15=df.iloc[:,4:134]
-    df16=df["comuna"]
-    df2=pd.concat([df16,df15], axis=1)
-    df2["sum"] = df2.iloc[:,1:131].sum(axis=1)
-    
-    max=df2["sum"].max()
-    min=df2["sum"].min()
-    
-    dat1=df2[df2["sum"]>=max]
-    dat1=dat1.iloc[0,2:131]
-    print(dat1)
-    
-    
-    
-    dat2=df2[df2["sum"]<=min]
-    dat2=dat2.iloc[0,2:131]
-    
-    fig, (ax1, ax2) = plt.pyplot.subplots(2)
-    fig.suptitle("Comuna con maxima incidencia y Comuna con minima incidencia")
+    fig.suptitle('Region con maxina incidencia y Region con minima incidencia')
     ax1.plot(dat1.index.values, dat1.to_numpy())
     ax1.xaxis.set_major_locator(MaxNLocator(5))
     
     ax2.plot(dat2.index.values,dat2.to_numpy())
     ax2.xaxis.set_major_locator(MaxNLocator(5))
+    plt.pyplot.show()
     
-        pass
+    
+    
+
+def max_min_comuna():
+    df=extraer_datos()#extraemos datos
+    
+    df15=df.iloc[:,4:134]
+    df16=df["Comuna"]
+    df2=pd.concat([df16,df15], axis=1)
+    df2['sum'] = df2.iloc[:,1:131].sum(axis=1)
+    
+    max=df2['sum'].max()
+    min=df2['sum'].min()
+    
+    dat1=df2[df2["sum"]>=max]
+    dat1=dat1.iloc[0,2:131]
+    print(dat1)
+    
+
+    
+    dat2=df2[df2["sum"]<=min]
+    dat2=dat2.iloc[0,2:131]
+    
+    fig, (ax1, ax2) = plt.pyplot.subplots(2)
+    fig.suptitle('Comuna con maxina incidencia y Comuna con minima incidencia')
+    ax1.plot(dat1.index.values, dat1.to_numpy())
+    ax1.xaxis.set_major_locator(MaxNLocator(5))
+    
+    ax2.plot(dat2.index.values,dat2.to_numpy())
+    ax2.xaxis.set_major_locator(MaxNLocator(5))
+    plt.pyplot.show()
+
+    pass
 
 while(1):
-     opcion2=0
-     #-------------cuerpo del main-------------------------
-     opcion 1.opcion2=menu()
-     
-     if(opcion1==1):
-         TDI_comuna(opcion2)
-     if(opcion1==2):
-         TDI_region(opcion2)
-     
-     if(opcion1==3):
-         max_min_region()
-         
-     if(opcion1==4):
-         max_min_comuna()
-         
-     #-----------------------------------------------------------------
-     if(opcion1==0):
-         print("saliendo....") #se pone 0 para que se aprecie el grafico
-         break
-      
+    opcion2=0
+    #---------------cuerpo del main -----------------------
+    opcion1,opcion2=menu()
     
+    if(opcion1==1):
+        TDI_comuna(opcion2)
+    if(opcion1==2):
+        TDI_region(opcion2)
+        
+    if(opcion1==3):
+        max_min_region()
+        
+    if(opcion1==4):
+        max_min_comuna()
     
-   
-  
-    
-    
-    
-   
-
-
-
-
-
-
-
-
-
-
-
-
-
+    #--------------------------------------
+    if(opcion1==0):
+        print("saliendo....")
+        break
